@@ -69,18 +69,26 @@ map2nifti(fds,sens_comb).to_filename('sensMap.nii.gz')
 searchlight1=sphere_searchlight(cvte2, radius=5, postproc=mean_sample())
 searchRes1=searchlight1(fds)
 
-sphere_errors=searchRes1.samples[0]
+sphere_Score=searchRes1.samples[0]
 sRes_mean=np.mean(searchRes1)
 sRes_std=np.std(searchRes1)
-chance_level=1.0-(1.0/fds.uniquetargets) #chance is .25 (empirically it is .251), so an error rate greater than
+chance_level=1.0/len(fds.uniquetargets) #chance is .25 (empirically it is .251), so an error rate greater than
 #than .75 would be greater than chance.  that is what we are computing here
 
-#Get the proportion of voxels that predict above chance
-frac_lower=np.round(np.mean(sphere_errors < chance_level -2*sRes_std),3)
+#Get the proportion of voxels that predict above chance when taking into account the std. deviation
+frac_lower=np.round(np.mean(sphere_Score < chance_level + 2*sRes_std),3)
 
 #Now let's export that map to something we can project onto a brain
-map2nifti(fds,1.0-sphere_errors).to_filename('searchlight_predAcc.nii.gz')
+map2nifti(fds,sphere_errors).to_filename('searchlight_predAcc.nii.gz')
 
+
+sphere_Score2=np.copy(sphere_Score)
+for voxI in range(0,len(sphere_Score)):
+    if sphere_Score[voxI]>chance_level+ 2*sRes_std:
+        sphere_Score2[voxI]=sphere_Score[voxI]
+    else:
+        sphere_Score2[voxI]=0
+map2nifti(fds,sphere_Score2).to_filename('maskedSigVox.nii.gz')
 
 
 #We can look at the overlap of voxels from each of the 5 cross validated runs
