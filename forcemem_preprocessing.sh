@@ -1,5 +1,5 @@
 #!/bin/bash
-# MODIFIED BY T.WANG twang.work@gmail.com 5.1.1y to include all preprocessing and ventral temporal lobe masks
+# MODIFIED BY T.WANG twang.work@gmail.com 5.1.1y to include all preprocessing and ventral temporal lobe masks and then further edited by Seth Koslov to fit ForceMem
 # Usage: >./forcemem_preprocessing '201704251' '/Users/srk482-admin/Documents/forcemem_mriDat/forcemem_201704251/Func/block4'
 #
 
