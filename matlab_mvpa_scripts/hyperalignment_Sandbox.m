@@ -12,8 +12,12 @@ cd ../../
 extension='.nii';
 subjList=['2017061601','2017062101','2017062701','2017062801','2017070601'];
 
-%Here, we are going to load everything into the normal subject object but
-%then transfer it to an all subj object after.
+%Here, I'm going to load all subject data as 1 subject, and then perform
+%MVPA by training on 4 subjects and testing on the left out subject.  I
+%will also (to make it even more similar to hyperalignment) train on all
+%subjects but leave out one block from one subject, and just test on that
+%one left out subject block.  This is equivalent to between subject
+%classification, without hyperalignment to get a baseline performance.
 for subI=1:5
     subDir=['/forcemem_' subList(subI)];
     cd('mask');
