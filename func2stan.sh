@@ -30,7 +30,7 @@ do
 	#fnirt --ref=${stndRef} --in=${anatRef} --refmask=${stndMask} --aff=${affRef} --cout=T12MNI --iout=highres_T12MNI_image
 	echo loc${blockI} convertwarp starting
 	convertwarp --ref=${stndRef} --warp1=${warpRef} --premat=func2highres.mat --out=t2_to_std --relout
-	echo loc${block1} applywarp starting
+	echo loc${blockI} applywarp starting
 	applywarp --ref=${stndRef} --in=bold_dt_mcf_brain.nii --warp=t2_to_std --rel --out=funcMNI
 	echo gunzippidedooda
 	gunzip funcMNI.nii.gz
